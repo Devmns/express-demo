@@ -9,16 +9,22 @@ router.get("/",asyncWrapper(async (req, res) =>{
     res.send(plans);
 }));
 
-router.get(":id", (req, res)=>{
+router.get(":id", asyncWrapper(async (req, res)=>{
+    let userId = req.params.id;
+    let plan = await planService.findOne(userId);
+    res.send(plan);
 
-});
+}));
 
-router.post("/", (req, res)=>{
+router.post("/", asyncWrapper(async (req, res)=>{
+    await planService.create(plan);
+    res.send(plan);
+}));
 
-});
-
-router.delete(":id", (req, res)=>{
-
-});
+router.delete(":id", asyncWrapper(async(req, res)=>{
+    let userId = req.params.id;
+    let int = await planService.deleteOne(userId);
+    
+}));
 
 module.exports = router;
